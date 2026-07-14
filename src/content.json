@@ -1,0 +1,68 @@
+[
+  {
+    "id": "chasing-shadows",
+    "title": "Chasing Shadows",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-06-15",
+    "image": "/images/chasing_shadows.png",
+    "caption": "A study of soft window light and deep silver gelatin shadows on photographic paper."
+  },
+  {
+    "id": "restless-bench",
+    "title": "The Restless Bench",
+    "tier": 1,
+    "medium": "video",
+    "date": "2026-07-02",
+    "image": "/images/chasing_shadows.png",
+    "video": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    "caption": "A short narrative video capturing fleeting interactions on a park bench at dusk."
+  },
+  {
+    "id": "silent-echoes",
+    "title": "Silent Echoes",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-05-20",
+    "image": "/images/silent_echoes.png",
+    "caption": "Geometric analysis of concrete forms casting deep shadows under a harsh mid-day sun."
+  },
+  {
+    "id": "composition-study",
+    "title": "Composition Study",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-07-10",
+    "image": "/images/composition_study.png",
+    "caption": "Bauhaus-inspired geometry charcoal sketches mapping spatial density and tension."
+  },
+  {
+    "id": "light-metal",
+    "title": "Light Study on Metal",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-07-12",
+    "image": "/images/silent_echoes.png",
+    "caption": "In-progress contrast exploration of light reflecting off polished and brushed sheet metal."
+  },
+  {
+    "id": "urban-grid",
+    "title": "Urban Grid",
+    "tier": 3,
+    "medium": "photo",
+    "date": "2026-04-12",
+    "image": "/images/urban_grid.png",
+    "caption": "Street photography attempting to capture symmetrical night grid alignments.",
+    "reason": "The geometry felt too rigid, losing the human texture and organic noise of the street."
+  },
+  {
+    "id": "water-flow",
+    "title": "The Water Flow",
+    "tier": 3,
+    "medium": "video",
+    "date": "2026-03-08",
+    "image": "/images/urban_grid.png",
+    "caption": "Long-exposure video documenting fluid patterns in moving river current.",
+    "reason": "Technical failure during exposure; chemical film canister was fogged beyond repair."
+  }
+]

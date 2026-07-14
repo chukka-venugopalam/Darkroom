@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darkroom — Creative Hub</title>
+  <meta name="description" content="A patient, tactile, chemical-darkroom inspired creative hub presenting finished prints, contact sheets, and negatives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@300;400;600;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="safelight-mode">
+  <div id="safelight-glow"></div>
+
+  <!-- Accessibility Jump Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Custom Cursor Elements -->
+  <div id="custom-cursor" class="crop-cursor">
+    <div class="cursor-tongs"></div>
+    <div class="cursor-crop-guide"></div>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">DARKROOM</div>
+      <nav>
+        <a href="#the-line-section">Line</a>
+        <a href="#gallery-section">Gallery</a>
+        <a href="#contact-sheets-section">Contact Sheets</a>
+        <a href="#negatives-section">Negatives</a>
+        <a href="#trays-section">Trays</a>
+        <a href="#notes-section">Notes</a>
+        <a href="#into-the-light-section">Contact</a>
+      </nav>
+      <div class="controls">
+        <button id="audio-toggle" aria-label="Toggle ambient sound" class="control-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="audio-wave"/></svg>
+        </button>
+        <div class="light-switch-container">
+          <span class="switch-label">Safelight</span>
+          <button id="light-switch" aria-label="Toggle daylight mode (Skip development)" aria-pressed="false" class="switch-btn">
+            <span class="switch-toggle"></span>
+          </button>
+          <span class="switch-label">Daylight</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- LANDING: The Line -->
+    <section id="the-line-section" class="scroll-section">
+      <div class="section-header">
+        <span class="tagline">Give it time. Nothing here is rushed.</span>
+      </div>
+      <div class="clothesline-container">
+        <svg id="clothesline-svg" viewBox="0 0 1400 300" preserveAspectRatio="none">
+          <path id="clothesline-wire" d="M 0,50 Q 700,180 1400,50" fill="none" stroke="rgba(255,0,0,0.3)" stroke-width="2" />
+        </svg>
+        <div id="clothesline-items"></div>
+      </div>
+    </section>
+
+    <!-- GALLERY: Tier 1 Prints -->
+    <section id="gallery-section" class="scroll-section">
+      <div class="section-container">
+        <h2>The Gallery — Finished Prints</h2>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="photo">Photo</button>
+          <button class="filter-btn" data-filter="video">Video</button>
+        </div>
+        <div id="gallery-grid" class="grid-layout"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT SHEETS: Tier 2 WIP -->
+    <section id="contact-sheets-section" class="scroll-section">
+      <div class="section-container">
+        <h2>The Contact Sheets — In Progress</h2>
+        <p class="section-intro">Sketches, work-in-progress, and early explorations. Visuals are permanently desaturated at midtones level.</p>
+        <div id="contact-sheets-timeline" class="timeline-layout"></div>
+      </div>
+    </section>
+
+    <!-- NEGATIVES: Tier 3 Rejects -->
+    <section id="negatives-section" class="scroll-section">
+      <div class="section-container">
+        <h2>The Negatives — Left Like That</h2>
+        <p class="section-intro">Not every exposure becomes a print. These didn't — and that's fine. Permanently capped at shadows detail level.</p>
+        <div id="negatives-strip-container" class="negatives-strip">
+          <div class="negative-header-film">KODAK TRI-X 400</div>
+          <div id="negatives-list" class="negatives-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE TRAYS: Interactive Skills -->
+    <section id="trays-section" class="scroll-section">
+      <div class="section-container">
+        <h2>The Trays — Process & Philosophy</h2>
+        <p class="section-intro">Dip a methodology card into the chemical baths to see its role in the cycle.</p>
+        
+        <div class="trays-wrapper">
+          <div class="tray" id="tray-developer" data-tray="developer">
+            <div class="tray-label">DEVELOPER</div>
+            <div class="tray-liquid"></div>
+            <div class="tray-content-slot">Drop tags here to develop ideas</div>
+          </div>
+          <div class="tray" id="tray-stop" data-tray="stop">
+            <div class="tray-label">STOP BATH</div>
+            <div class="tray-liquid"></div>
+            <div class="tray-content-slot">Drop tags here to reflect & halt</div>
+          </div>
+          <div class="tray" id="tray-fix" data-tray="fix">
+            <div class="tray-label">FIXER</div>
+            <div class="tray-liquid"></div>
+            <div class="tray-content-slot">Drop tags here to cement & finish</div>
+          </div>
+        </div>
+
+        <div class="tray-tags-container">
+          <div class="tray-tag" draggable="true" id="tag-concept" data-description-developer="Developer: Concepting, sketching, and exploration. Here, we build up density, starting from raw dark sketches. It is organic, muddy, and full of early shadows." data-description-stop="Stop Bath: Critical review and halt. A momentary dip in acid to freeze reaction. This is where we step back and ask if the path holds merit before committing." data-description-fix="Fixer: Production and stabilization. The fixer renders the concept stable under daylight. We optimize, structure, and bundle the final product.">Concepting & Ideation</div>
+          <div class="tray-tag" draggable="true" id="tag-webgl" data-description-developer="Developer: WebGL, Math & Shader development. Fiddling with vertex coordinate logic, noise thresholds, and viewport projection maps." data-description-stop="Stop Bath: Profiling memory bounds, checking context limits, and preventing frame rate degradation. Stopping to verify WebGL context leaks." data-description-fix="Fixer: Asset caching, pipeline optimization, and code minification. Locking in GPU shaders at 60fps.">WebGL Shaders</div>
+          <div class="tray-tag" draggable="true" id="tag-ux" data-description-developer="Developer: Dynamic wireframing, motion exploration, and user testing. Letting interactions reveal early tactile pathways." data-description-stop="Stop Bath: Cognitive overhead review and accessibility audit. Halting complex flows to ensure usability and contrast standards." data-description-fix="Fixer: Final responsive style integration, touch interface tuning, and DOM semantics compliance.">UX & UI Design</div>
+          <div class="tray-tag" draggable="true" id="tag-perf" data-description-developer="Developer: Running early performance sweeps, tracking frame rates during animations, and drafting rendering trees." data-description-stop="Stop Bath: Pinpointing bottlenecks in scripting or paint. Freezing renders on offscreen elements to prevent memory leaks." data-description-fix="Fixer: Local storage caching, lazy loading, and hardware acceleration locks. Renders fixed.">Performance Tuning</div>
+        </div>
+
+        <div id="tray-result-panel" class="tray-result">
+          <div class="tray-result-inner">
+            <p id="tray-result-text">Select a card and dip it into a tray above to explore the process.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE NOTES: About -->
+    <section id="notes-section" class="scroll-section">
+      <div class="section-container">
+        <div class="notes-book">
+          <div class="notes-page-left">
+            <div class="stamp">ARCHIVE NOTES</div>
+            <p class="handwritten-date">Lab Session: July 14, 2026</p>
+            <h3>Philosophy of Patience</h3>
+            <p>Under the safelight, everything looks the same at first. The darkroom enforces a boundary against the modern, instant web. We do not demand immediate attention; we wait for it. We believe code is a craft that requires agitation and time to expose its true character.</p>
+            <p>Our work values transparency. That is why this site contains the negative strip. The ideas that did not develop are kept, labeled, and archived. They are the chemical grain that shapes the final print.</p>
+          </div>
+          <div class="notes-page-right">
+            <h3>The Operator</h3>
+            <p>Creative Technologist & Frontend Engineer. Specialized in raw WebGL pipelines, physics-based UI, and semantic interaction design.</p>
+            <p>This space houses active prints (finished works), contact sheets (drafts and sketches), and raw film negatives (discarded ideas). It serves as both a devlog and a technical showcase of high-performance DOM copy shaders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTO THE LIGHT: Contact Form (Daylight transition) -->
+    <section id="into-the-light-section" class="scroll-section">
+      <div class="section-container">
+        <h2>Into the Light</h2>
+        <p class="section-intro">Leaving the red safelight behind. Let's build something together.</p>
+        <div class="contact-card">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="form-name">Name</label>
+              <input type="text" id="form-name" required placeholder="Type your name...">
+            </div>
+            <div class="form-group">
+              <label for="form-email">Email</label>
+              <input type="email" id="form-email" required placeholder="Type your email...">
+            </div>
+            <div class="form-group">
+              <label for="form-message">Message</label>
+              <textarea id="form-message" rows="4" required placeholder="Describe your project..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Expose Project</button>
+          </form>
+          <div class="contact-links">
+            <a href="mailto:operator@darkroom.local" class="contact-link">operator@darkroom.local</a>
+            <a href="#" class="contact-link">github.com/darkroom-hub</a>
+            <a href="#" class="contact-link">cv / archive.pdf</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 DARKROOM. Fixed state.</p>
+      <button id="tech-log-toggle" class="tech-log-btn">Show Technical Log</button>
+    </div>
+    <div id="tech-log" class="tech-log-content hidden">
+      <h3>Technical Specifications</h3>
+      <ul>
+        <li><strong>Render Pipeline:</strong> Single offscreen WebGL context drawing to multiple DOM 2D Canvases using GPU transfer.</li>
+        <li><strong>Resolution:</strong> Fixed-resolution framebuffer (1024x1024 px) with hardware downscaling.</li>
+        <li><strong>Sway Physics:</strong> Mass-spring-damper math simulating clothesline inertia under cursor wind-pressure.</li>
+        <li><strong>Input:</strong> Unified Pointer Events API with touch-dwell detection (>400ms filter).</li>
+        <li><strong>Accessibility:</strong> Daylight bypass switch disabling GPU ticks and forcing 100% development.</li>
+      </ul>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
