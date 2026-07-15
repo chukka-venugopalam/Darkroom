@@ -1,68 +1,58 @@
 [
   {
-    "id": "chasing-shadows",
-    "title": "Chasing Shadows",
+    "id": "phyllotaxis-bloom",
+    "title": "Phyllotaxis Bloom",
     "tier": 1,
     "medium": "photo",
-    "date": "2026-06-15",
-    "image": "/images/chasing_shadows.png",
-    "caption": "A study of soft window light and deep silver gelatin shadows on photographic paper."
+    "date": "2026-07-01",
+    "image": "/images/phyllotaxis_bloom.png",
+    "caption": "A study in why nature's patterns aren't decoration — they're what efficient, patient growth looks like from the outside."
   },
   {
-    "id": "restless-bench",
-    "title": "The Restless Bench",
+    "id": "fractal-branching",
+    "title": "Fractal Branching",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-07-05",
+    "image": "/images/fractal_branching.png",
+    "caption": "Comparative study (River delta, lightning, lung bronchioles, bare root). Form optimized for energy minimization under spatial constraints."
+  },
+  {
+    "id": "cymatics",
+    "title": "Cymatics",
     "tier": 1,
     "medium": "video",
-    "date": "2026-07-02",
-    "image": "/images/chasing_shadows.png",
+    "date": "2026-07-08",
+    "image": "/images/cymatics_poster.png",
     "video": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-    "caption": "A short narrative video capturing fleeting interactions on a park bench at dusk."
+    "caption": "Symmetrical mandala pattern forming in fine sand on a vibrating black metal plate at pure tone frequencies."
   },
   {
-    "id": "silent-echoes",
-    "title": "Silent Echoes",
+    "id": "radiolaria-architecture",
+    "title": "Radiolaria Architecture",
     "tier": 1,
     "medium": "photo",
-    "date": "2026-05-20",
-    "image": "/images/silent_echoes.png",
-    "caption": "Geometric analysis of concrete forms casting deep shadows under a harsh mid-day sun."
-  },
-  {
-    "id": "composition-study",
-    "title": "Composition Study",
-    "tier": 2,
-    "medium": "sketch",
-    "date": "2026-07-10",
-    "image": "/images/composition_study.png",
-    "caption": "Bauhaus-inspired geometry charcoal sketches mapping spatial density and tension."
-  },
-  {
-    "id": "light-metal",
-    "title": "Light Study on Metal",
-    "tier": 2,
-    "medium": "sketch",
     "date": "2026-07-12",
-    "image": "/images/silent_echoes.png",
-    "caption": "In-progress contrast exploration of light reflecting off polished and brushed sheet metal."
+    "image": "/images/radiolaria_architecture.png",
+    "caption": "Nature doesn't have a style. It has a rule, applied patiently enough that it starts to look like one."
   },
   {
-    "id": "urban-grid",
-    "title": "Urban Grid",
+    "id": "crystalline-growth",
+    "title": "Crystalline Growth",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-07-14",
+    "image": "/images/crystalline_growth.png",
+    "caption": "Micro time-lapse analysis of facet crystallization expanding outward in a grid-like coordinate space."
+  },
+  {
+    "id": "crystallization-error",
+    "title": "Crystallization Error",
     "tier": 3,
     "medium": "photo",
-    "date": "2026-04-12",
-    "image": "/images/urban_grid.png",
-    "caption": "Street photography attempting to capture symmetrical night grid alignments.",
-    "reason": "The geometry felt too rigid, losing the human texture and organic noise of the street."
-  },
-  {
-    "id": "water-flow",
-    "title": "The Water Flow",
-    "tier": 3,
-    "medium": "video",
-    "date": "2026-03-08",
-    "image": "/images/urban_grid.png",
-    "caption": "Long-exposure video documenting fluid patterns in moving river current.",
-    "reason": "Technical failure during exposure; chemical film canister was fogged beyond repair."
+    "date": "2026-05-18",
+    "image": "/images/crystalline_growth.png",
+    "caption": "Incomplete crystallization study under polarized filter.",
+    "reason": "Mineral density grew too fast, shattering the micro-lens array and fogging the plate."
   }
 ]
