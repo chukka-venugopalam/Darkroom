@@ -54,5 +54,52 @@
     "image": "/images/crystalline_growth.png",
     "caption": "Incomplete crystallization study under polarized filter.",
     "reason": "Mineral density grew too fast, shattering the micro-lens array and fogging the plate."
+  },
+  {
+    "id": "spiral-galaxy",
+    "title": "Spiral Galaxy Diagram",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-07-15",
+    "image": "/images/spiral_galaxy.png",
+    "caption": "A face-on spiral galaxy showing granular star fields and black dust-lane voids, overlaid with a gold logarithmic spiral tracing the primary arm. Deliberately mirroring the Phyllotaxis Bloom diagram."
+  },
+  {
+    "id": "orbital-resonance",
+    "title": "Orbital Resonance",
+    "tier": 1,
+    "medium": "video",
+    "date": "2026-07-15",
+    "image": "/images/orbital_resonance_poster.png",
+    "video": "procedural:orbital-resonance",
+    "caption": "Moons and asteroid belts tracing stable resonant orbits. The geometric pattern accumulates over time, mirroring the cymatic sand mandalas."
+  },
+  {
+    "id": "crater-topology",
+    "title": "Crater Field Topology",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-07-15",
+    "image": "/images/crater_field.png",
+    "caption": "Extreme low-angle raking light on overlapping planetary craters, forming a natural Voronoi mesh. 'Every scale we've looked at keeps saying the same thing back to us. We just needed to wait long enough to hear it.'"
+  },
+  {
+    "id": "nebula-filament",
+    "title": "Nebula Filament Structure",
+    "tier": 1,
+    "medium": "photo",
+    "date": "2026-07-15",
+    "image": "/images/nebula_filament.png",
+    "caption": "A dense star-forming nebula in charcoal, deep umber, and a cold cyan accent, tracing a fractal branching pattern of gas and dust."
+  },
+  {
+    "id": "solar-corona",
+    "title": "Solar Corona Pulse",
+    "tier": 1,
+    "medium": "video",
+    "date": "2026-07-15",
+    "image": "/images/solar_corona_poster.png",
+    "video": "procedural:solar-corona",
+    "caption": "A meditative pulse of solar plasma filaments rising along magnetic field lines. Restrained monochrome-orange, showcasing the geometry of solar magnetism."
   }
 ]

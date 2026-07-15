@@ -43,7 +43,15 @@ export function initClothesline(items) {
     container.appendChild(element);
 
     // Register with Progressive Development Engine
-    registerTile(item.id, element, item.image, item.tier);
+    registerTile('line-' + item.id, element, item.image, item.tier);
+
+    // Click to scroll to the gallery card showcase
+    element.addEventListener('click', () => {
+      const galleryItem = document.querySelector(`#gallery-section [data-id="${item.id}"]`);
+      if (galleryItem) {
+        galleryItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
 
     // Sway parameters
     cardsData.push({

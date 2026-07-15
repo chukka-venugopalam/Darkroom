@@ -1,4 +1,5 @@
 export let webglAvailable = true;
+import { drawOrbitalResonance, drawSolarCorona } from './video.js';
 
 // WebGL shaders
 const vsSource = `
@@ -257,7 +258,8 @@ export function registerTile(id, element, imageSrc, tier) {
   exposureCtx.fillStyle = '#000000';
   exposureCtx.fillRect(0, 0, 128, 128);
 
-  const savedState = localStorage.getItem(`darkroom_exposure_${id}`);
+  const baseId = id.replace(/^line-/, '');
+  const savedState = localStorage.getItem(`darkroom_exposure_${baseId}`);
   let currentAmbientExposure = savedState ? parseFloat(savedState) : 0.0;
   let isFixed = false;
 
@@ -284,6 +286,7 @@ export function registerTile(id, element, imageSrc, tier) {
     isFixed,
     cap,
     lastInteraction: 0,
+    isHovered: false,
     rippleX: 0.5,
     rippleY: 0.5,
     rippleStrength: 0.0,
@@ -292,10 +295,19 @@ export function registerTile(id, element, imageSrc, tier) {
 
   tiles.set(id, tileData);
 
+  canvas.addEventListener('pointerenter', () => {
+    tileData.isHovered = true;
+    tileData.lastInteraction = Date.now();
+  });
+
+  canvas.addEventListener('pointerleave', () => {
+    tileData.isHovered = false;
+  });
+
   // Hook Pointer Events to draw local exposure (agitation)
   canvas.addEventListener('pointermove', (e) => {
-    if (tileData.isFixed) return;
     tileData.lastInteraction = Date.now();
+    if (tileData.isFixed) return;
     
     // Relative coordinates
     const rect = canvas.getBoundingClientRect();
@@ -367,7 +379,37 @@ export function initDevelopEngine() {
   }
 
   // Active loop scheduler ticking at 60fps
+  let lastFrameTime = performance.now();
+
   const tick = () => {
+    const now = performance.now();
+    const deltaTime = Math.min(0.1, (now - lastFrameTime) / 1000.0);
+    lastFrameTime = now;
+
+    // Update playing simulations
+    tiles.forEach((tile) => {
+      if (tile.isFixed && tile.simulationType && tile.isPlaying) {
+        // Active conditions: viewport, and (hovered or interacted recently)
+        const rect = tile.canvas.getBoundingClientRect();
+        const inViewport = rect.bottom >= 0 && rect.top <= window.innerHeight;
+        const isHovered = tile.isHovered;
+        const isRecentInteraction = (Date.now() - tile.lastInteraction) < 8000;
+
+        if (inViewport && (isHovered || isRecentInteraction)) {
+          tile.simTime = (tile.simTime || 0) + deltaTime;
+          if (tile.simTime >= 30) {
+            tile.simTime = 0; // loop
+          }
+          
+          if (tile.updateScrubProgress) {
+            tile.updateScrubProgress(tile.simTime / 30);
+          }
+
+          queueRender(tile.id, 2);
+        }
+      }
+    });
+
     const time = (Date.now() - startTime) / 1000.0;
 
     // Process at most 1 render request per frame
@@ -378,25 +420,34 @@ export function initDevelopEngine() {
 
       const tile = tiles.get(tileId);
       if (tile) {
-        // Evaluate overall exposure level by analyzing exposure map pixels
-        updateExposureMetrics(tile);
-
-        // Render shader offscreen and paint local 2D canvas
-        renderer.render(tile, time);
-        tile.ctx2d.drawImage(renderer.canvas, 0, 0, tile.canvas.width, tile.canvas.height);
-
-        // Ripple dampening
-        if (tile.rippleStrength > 0.01) {
-          tile.rippleStrength *= 0.92;
-          queueRender(tileId, 2); // Queue dynamic updates as Priority 2 (Bloom/Anim)
+        if (tile.isFixed && tile.simulationType) {
+          const isDaylight = document.body.classList.contains('daylight-mode');
+          if (tile.simulationType === 'orbital-resonance') {
+            drawOrbitalResonance(tile.ctx2d, tile.canvas.width, tile.canvas.height, tile.simTime, isDaylight);
+          } else if (tile.simulationType === 'solar-corona') {
+            drawSolarCorona(tile.ctx2d, tile.canvas.width, tile.canvas.height, tile.simTime, isDaylight);
+          }
         } else {
-          tile.rippleStrength = 0.0;
-        }
+          // Evaluate overall exposure level by analyzing exposure map pixels
+          updateExposureMetrics(tile);
 
-        // Chemical bloom updates
-        if (tile.tier === 1 && tile.expVal > 0.8 && !tile.isFixed) {
-          tile.bloomPulse = Math.sin(time * 12.0) * 0.5 + 0.5;
-          queueRender(tileId, 2);
+          // Render shader offscreen and paint local 2D canvas
+          renderer.render(tile, time);
+          tile.ctx2d.drawImage(renderer.canvas, 0, 0, tile.canvas.width, tile.canvas.height);
+
+          // Ripple dampening
+          if (tile.rippleStrength > 0.01) {
+            tile.rippleStrength *= 0.92;
+            queueRender(tileId, 2); // Queue dynamic updates as Priority 2 (Bloom/Anim)
+          } else {
+            tile.rippleStrength = 0.0;
+          }
+
+          // Chemical bloom updates
+          if (tile.tier === 1 && tile.expVal > 0.8 && !tile.isFixed) {
+            tile.bloomPulse = Math.sin(time * 12.0) * 0.5 + 0.5;
+            queueRender(tileId, 2);
+          }
         }
       }
     }
@@ -431,7 +482,8 @@ function updateExposureMetrics(tile) {
     ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
     ctx.fillRect(0, 0, 128, 128);
 
-    localStorage.setItem(`darkroom_exposure_${tile.id}`, tile.cap.toString());
+    const baseId = tile.id.replace(/^line-/, '');
+    localStorage.setItem(`darkroom_exposure_${baseId}`, tile.cap.toString());
 
     // Dispatch completion event for video/UI elements
     tile.canvas.dispatchEvent(new CustomEvent('fixed', { detail: { id: tile.id } }));

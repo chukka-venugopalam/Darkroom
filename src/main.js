@@ -96,11 +96,29 @@ function toggleAudio() {
 
 // Populate sections DOM
 function populateGallery() {
-  const grid = document.getElementById('gallery-grid');
-  if (!grid) return;
+  const natureGrid = document.getElementById('gallery-grid-nature');
+  const spaceGrid = document.getElementById('gallery-grid-space');
+  if (!natureGrid || !spaceGrid) return;
+
+  const naturePrints = [
+    'phyllotaxis-bloom',
+    'fractal-branching',
+    'cymatics',
+    'radiolaria-architecture'
+  ];
+  const spacePrints = [
+    'spiral-galaxy',
+    'orbital-resonance',
+    'crater-topology',
+    'nebula-filament',
+    'solar-corona'
+  ];
 
   const prints = contentData.filter(item => item.tier === 1);
-  grid.innerHTML = prints.map(item => `
+  const natureData = prints.filter(item => naturePrints.includes(item.id));
+  const spaceData = prints.filter(item => spacePrints.includes(item.id));
+
+  const renderCard = (item) => `
     <div class="tile-frame" data-id="${item.id}" data-medium="${item.medium}">
       <div class="canvas-container">
         <canvas width="400" height="300"></canvas>
@@ -114,14 +132,20 @@ function populateGallery() {
         <div class="tile-caption">${item.caption}</div>
       </div>
     </div>
-  `).join('');
+  `;
+
+  natureGrid.innerHTML = natureData.map(renderCard).join('');
+  spaceGrid.innerHTML = spaceData.map(renderCard).join('');
 
   prints.forEach(item => {
-    const el = grid.querySelector(`[data-id="${item.id}"]`);
-    registerTile(item.id, el, item.image, item.tier);
-    if (item.medium === 'video' && item.video) {
-      const tile = tiles.get(item.id);
-      initVideoHandlers(tile, item.video);
+    const container = naturePrints.includes(item.id) ? natureGrid : spaceGrid;
+    const el = container.querySelector(`[data-id="${item.id}"]`);
+    if (el) {
+      registerTile(item.id, el, item.image, item.tier);
+      if (item.medium === 'video' && item.video) {
+        const tile = tiles.get(item.id);
+        initVideoHandlers(tile, item.video);
+      }
     }
   });
 }
@@ -198,7 +222,8 @@ function initLightSwitch() {
       // Reload development state mapping
       tiles.forEach(tile => {
         tile.isFixed = false;
-        const saved = localStorage.getItem(`darkroom_exposure_${tile.id}`);
+        const baseId = tile.id.replace(/^line-/, '');
+        const saved = localStorage.getItem(`darkroom_exposure_${baseId}`);
         const savedVal = saved ? parseFloat(saved) : 0.0;
         tile.expVal = savedVal;
         
@@ -275,7 +300,7 @@ function initScrollObserver() {
 // Filter grid items
 function initGalleryFilters() {
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const items = document.querySelectorAll('#gallery-grid .tile-frame');
+  const items = document.querySelectorAll('.grid-layout .tile-frame');
 
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {

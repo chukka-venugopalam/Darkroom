@@ -1054,3 +1054,64 @@ body.daylight-mode .tech-log-content {
     display: none;
   }
 }
+
+/* Parallel Case Studies Gallery Styles */
+.gallery-case-studies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.case-study-block {
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 17, 17, 0.4);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  border-radius: 6px;
+  transition: border-color 0.8s ease, background 0.8s ease;
+}
+
+body.daylight-mode .case-study-block {
+  background: rgba(232, 228, 219, 0.4);
+}
+
+.case-study-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.case-study-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.case-study-header h3 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 10px;
+}
+
+.case-study-intro {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+@media (max-width: 1024px) {
+  .gallery-case-studies {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
