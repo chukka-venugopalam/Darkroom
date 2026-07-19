@@ -24,6 +24,7 @@ export function initClothesline(items) {
     // Create hanging card frame
     const element = document.createElement('div');
     element.className = 'hanging-item';
+    element.setAttribute('tabindex', '0');
     element.style.left = `${(x / 1400) * 100}%`;
     element.style.top = `${y}px`;
     element.setAttribute('data-id', item.id);

@@ -1123,3 +1123,13 @@ body.daylight-mode .case-study-block {
   touch-action: none;
 }
 
+/* Custom focus indicators for keyboard navigation */
+.hanging-item:focus-visible,
+.tile-frame:focus-visible,
+.timeline-item:focus-visible,
+.negative-frame:focus-visible {
+  outline: 1px dashed var(--accent-red);
+  outline-offset: 6px;
+}
+
+

@@ -119,7 +119,7 @@ function populateGallery() {
   const spaceData = prints.filter(item => spacePrints.includes(item.id));
 
   const renderCard = (item) => `
-    <div class="tile-frame" data-id="${item.id}" data-medium="${item.medium}">
+    <div class="tile-frame" tabindex="0" data-id="${item.id}" data-medium="${item.medium}">
       <div class="canvas-container">
         <canvas width="400" height="300"></canvas>
       </div>
@@ -156,7 +156,7 @@ function populateContactSheets() {
 
   const sheets = contentData.filter(item => item.tier === 2);
   timeline.innerHTML = sheets.map(item => `
-    <div class="timeline-item" data-id="${item.id}">
+    <div class="timeline-item" tabindex="0" data-id="${item.id}">
       <div class="tile-frame">
         <div class="canvas-container">
           <canvas width="300" height="225"></canvas>
@@ -182,7 +182,7 @@ function populateNegatives() {
 
   const negatives = contentData.filter(item => item.tier === 3);
   list.innerHTML = negatives.map(item => `
-    <div class="negative-frame" data-id="${item.id}">
+    <div class="negative-frame" tabindex="0" data-id="${item.id}">
       <div class="negative-canvas-wrapper">
         <canvas width="320" height="224"></canvas>
       </div>
@@ -354,10 +354,22 @@ function initContactForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    const name = document.getElementById('form-name')?.value || '';
+    const email = document.getElementById('form-email')?.value || '';
+    const message = document.getElementById('form-message')?.value || '';
+
+    const subject = encodeURIComponent(`Darkroom Inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    const mailto = `mailto:chukkavenugopalam@gmail.com?subject=${subject}&body=${body}`;
+
     const btn = form.querySelector('.submit-btn');
     btn.textContent = 'Exposed Successfully ✔';
     btn.style.background = '#28a745';
     btn.disabled = true;
+
+    // Launch native mail client
+    window.location.href = mailto;
 
     setTimeout(() => {
       form.reset();

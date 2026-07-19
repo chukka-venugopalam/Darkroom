@@ -301,6 +301,7 @@ export function registerTile(id, element, imageSrc, tier) {
     cap,
     lastInteraction: 0,
     isHovered: false,
+    isFocused: false,
     rippleX: 0.5,
     rippleY: 0.5,
     rippleStrength: 0.0,
@@ -308,6 +309,53 @@ export function registerTile(id, element, imageSrc, tier) {
   };
 
   tiles.set(id, tileData);
+
+  // Keyboard accessibility listeners on the parent element
+  element.addEventListener('focus', () => {
+    tileData.isFocused = true;
+    tileData.lastInteraction = Date.now();
+  });
+
+  element.addEventListener('blur', () => {
+    tileData.isFocused = false;
+  });
+
+  element.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (tileData.isFixed) {
+        if (tileData.simulationType) {
+          tileData.isPlaying = !tileData.isPlaying;
+          tileData.lastInteraction = Date.now();
+          const playOverlay = element.querySelector('.video-play-overlay');
+          if (tileData.isPlaying) {
+            playOverlay?.classList.add('playing');
+          } else {
+            playOverlay?.classList.remove('playing');
+            tileData.drawImmediate?.();
+          }
+        } else {
+          const video = element.querySelector('video');
+          const playOverlay = element.querySelector('.video-play-overlay');
+          if (video && playOverlay) {
+            if (video.paused) {
+              video.play();
+              playOverlay.classList.add('playing');
+            } else {
+              video.pause();
+              playOverlay.classList.remove('playing');
+            }
+          }
+        }
+      } else {
+        const ctx = tileData.exposureCtx;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.fillRect(16, 16, 96, 96);
+        tileData.lastInteraction = Date.now();
+        queueRender(id, 1);
+      }
+    }
+  });
 
   canvas.addEventListener('pointerenter', () => {
     tileData.isHovered = true;
@@ -400,26 +448,44 @@ export function initDevelopEngine() {
     const deltaTime = Math.min(0.1, (now - lastFrameTime) / 1000.0);
     lastFrameTime = now;
 
-    // Update playing simulations
+    // Update playing simulations and keyboard-focused tiles
     tiles.forEach((tile) => {
-      if (tile.isFixed && tile.simulationType && tile.isPlaying) {
-        // Active conditions: viewport, and (hovered or interacted recently)
-        const rect = tile.canvas.getBoundingClientRect();
-        const inViewport = rect.bottom >= 0 && rect.top <= window.innerHeight;
-        const isHovered = tile.isHovered;
-        const isRecentInteraction = (Date.now() - tile.lastInteraction) < 8000;
+      if (tile.isFixed) {
+        if (tile.simulationType && tile.isPlaying) {
+          // Active conditions: viewport, and (hovered/focused or interacted recently)
+          const rect = tile.canvas.getBoundingClientRect();
+          const inViewport = rect.bottom >= 0 && rect.top <= window.innerHeight;
+          const isHovered = tile.isHovered || tile.isFocused;
+          const isRecentInteraction = (Date.now() - tile.lastInteraction) < 8000;
 
-        if (inViewport && (isHovered || isRecentInteraction)) {
-          tile.simTime = (tile.simTime || 0) + deltaTime;
-          if (tile.simTime >= 30) {
-            tile.simTime = 0; // loop
-          }
-          
-          if (tile.updateScrubProgress) {
-            tile.updateScrubProgress(tile.simTime / 30);
-          }
+          if (inViewport && (isHovered || isRecentInteraction)) {
+            tile.simTime = (tile.simTime || 0) + deltaTime;
+            if (tile.simTime >= 30) {
+              tile.simTime = 0; // loop
+            }
+            
+            if (tile.updateScrubProgress) {
+              tile.updateScrubProgress(tile.simTime / 30);
+            }
 
-          queueRender(tile.id, 2);
+            queueRender(tile.id, 2);
+          }
+        }
+      } else {
+        // Undeveloped focused tile: slowly reveal over time from center
+        if (tile.isFocused) {
+          tile.lastInteraction = Date.now();
+          const ctx = tile.exposureCtx;
+          const x = 64;
+          const y = 64;
+          const grad = ctx.createRadialGradient(x, y, 0, x, y, 40);
+          grad.addColorStop(0, 'rgba(255, 255, 255, 0.015)');
+          grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(x, y, 40, 0, Math.PI * 2);
+          ctx.fill();
+          queueRender(tile.id, 2); // queue focus reveal updates
         }
       }
     });
