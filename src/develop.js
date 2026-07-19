@@ -248,6 +248,9 @@ export function registerTile(id, element, imageSrc, tier) {
   const canvas = element.querySelector('canvas');
   if (!canvas) return;
 
+  // Dynamically inject developable class for unified cursor tracking
+  canvas.classList.add('developable-tile');
+
   const ctx2d = canvas.getContext('2d');
 
   // Offscreen canvas for mapping local exposure values
@@ -260,11 +263,22 @@ export function registerTile(id, element, imageSrc, tier) {
 
   const baseId = id.replace(/^line-/, '');
   const savedState = localStorage.getItem(`darkroom_exposure_${baseId}`);
-  let currentAmbientExposure = savedState ? parseFloat(savedState) : 0.0;
-  let isFixed = false;
-
+  
   // Capping rules
   const cap = tier === 1 ? 1.0 : (tier === 2 ? 0.75 : 0.45);
+  
+  // Robust localStorage parsing (defend against non-numeric string values like 'fixed')
+  let currentAmbientExposure = 0.0;
+  if (savedState) {
+    if (savedState === 'fixed') {
+      currentAmbientExposure = cap;
+    } else {
+      const parsed = parseFloat(savedState);
+      currentAmbientExposure = isNaN(parsed) ? 0.0 : parsed;
+    }
+  }
+  
+  let isFixed = false;
   if (currentAmbientExposure >= cap) {
     currentAmbientExposure = cap;
     isFixed = true;

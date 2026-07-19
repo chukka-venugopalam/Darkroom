@@ -44,7 +44,7 @@ export class CustomCursor {
     // Hover state controls for buttons/navigation
     document.addEventListener('pointerover', (e) => {
       const target = e.target.closest('a, button, input, textarea, .tray-tag');
-      const isDevelopable = e.target.closest('.canvas-container, .negative-canvas-wrapper, .hanging-card canvas');
+      const isDevelopable = e.target.closest('.developable-tile');
 
       if (target) {
         this.cursorEl.className = 'crop-cursor hover-mode';

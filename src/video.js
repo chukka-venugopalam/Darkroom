@@ -104,45 +104,107 @@ function mountVideoPlayer(tile, videoSrc) {
     setupScrubBar(scrubBar, tile, true);
 
   } else {
-    // Normal video tag player
+    // Normal video tag player with missing-video fallback
     const video = document.createElement('video');
     video.src = videoSrc;
     video.loop = true;
     video.playsInline = true;
     video.muted = true;
 
+    // Hide video until it successfully loads to prevent brief black/blank flash
+    video.style.display = 'none';
+    wrapper.style.background = 'transparent'; // Let canvas show until video loads
     wrapper.appendChild(video);
-    wrapper.appendChild(playOverlay);
-    wrapper.appendChild(scrubBar);
     container.appendChild(wrapper);
 
-    // Video interaction events
-    playOverlay.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (video.paused) {
-        video.play();
-        playOverlay.classList.add('playing');
-      } else {
+    let hasResponded = false;
+
+    const handleLoadFailure = () => {
+      if (hasResponded) return;
+      hasResponded = true;
+
+      video.style.display = 'none';
+      wrapper.style.background = 'transparent';
+
+      // Quiet darkroom archive style label stamp
+      const label = document.createElement('div');
+      label.className = 'video-fallback-label';
+      label.textContent = 'NOT YET DEVELOPED';
+
+      label.style.position = 'absolute';
+      label.style.bottom = '15px';
+      label.style.left = '15px';
+      label.style.fontFamily = 'var(--font-mono)';
+      label.style.fontSize = '0.7rem';
+      label.style.color = 'var(--accent-red)';
+      label.style.border = '1px dashed var(--border-color)';
+      label.style.padding = '4px 8px';
+      label.style.borderRadius = '3px';
+      label.style.background = 'rgba(12, 10, 10, 0.85)';
+      label.style.letterSpacing = '1px';
+      label.style.textTransform = 'uppercase';
+
+      wrapper.appendChild(label);
+    };
+
+    const handleLoadSuccess = () => {
+      if (hasResponded) return;
+      hasResponded = true;
+
+      // Show video and play overlay/scrub bar
+      video.style.display = 'block';
+      wrapper.style.background = '#000';
+
+      wrapper.appendChild(playOverlay);
+      wrapper.appendChild(scrubBar);
+
+      // Play video automatically on mount once confirmed loaded
+      video.play()
+        .then(() => {
+          playOverlay.classList.add('playing');
+        })
+        .catch(err => {
+          console.log('Autoplay blocked, showing play overlay:', err);
+        });
+
+      // Video interaction events
+      playOverlay.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.paused) {
+          video.play();
+          playOverlay.classList.add('playing');
+        } else {
+          video.pause();
+          playOverlay.classList.remove('playing');
+        }
+      });
+
+      video.addEventListener('click', (e) => {
+        e.stopPropagation();
         video.pause();
         playOverlay.classList.remove('playing');
+      });
+
+      video.addEventListener('timeupdate', () => {
+        if (video.duration) {
+          const pct = (video.currentTime / video.duration) * 100;
+          progress.style.width = `${pct}%`;
+        }
+      });
+
+      setupScrubBar(scrubBar, video, false);
+    };
+
+    video.addEventListener('loadedmetadata', handleLoadSuccess);
+    video.addEventListener('canplay', handleLoadSuccess);
+    video.addEventListener('error', handleLoadFailure);
+
+    // Fallback if no event fires within 2.5 seconds
+    setTimeout(() => {
+      if (!hasResponded) {
+        handleLoadFailure();
       }
-    });
-
-    video.addEventListener('click', (e) => {
-      e.stopPropagation();
-      video.pause();
-      playOverlay.classList.remove('playing');
-    });
-
-    video.addEventListener('timeupdate', () => {
-      if (video.duration) {
-        const pct = (video.currentTime / video.duration) * 100;
-        progress.style.width = `${pct}%`;
-      }
-    });
-
-    // Setup unified touch scrubbing
-    setupScrubBar(scrubBar, video, false);
+    }, 2500);
   }
 }
 

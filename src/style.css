@@ -1115,3 +1115,11 @@ body.daylight-mode .case-study-block {
     gap: 30px;
   }
 }
+
+/* Touch interaction fixes to prevent scrolling from canceling pointer drag */
+.canvas-container canvas,
+.negative-canvas-wrapper canvas,
+.video-scrub-bar {
+  touch-action: none;
+}
+

@@ -224,7 +224,15 @@ function initLightSwitch() {
         tile.isFixed = false;
         const baseId = tile.id.replace(/^line-/, '');
         const saved = localStorage.getItem(`darkroom_exposure_${baseId}`);
-        const savedVal = saved ? parseFloat(saved) : 0.0;
+        let savedVal = 0.0;
+        if (saved) {
+          if (saved === 'fixed') {
+            savedVal = tile.cap;
+          } else {
+            const parsed = parseFloat(saved);
+            savedVal = isNaN(parsed) ? 0.0 : parsed;
+          }
+        }
         tile.expVal = savedVal;
         
         // Re-draw exposure canvas state
