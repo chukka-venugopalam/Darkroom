@@ -981,27 +981,244 @@ body.daylight-mode .tech-log-content {
   line-height: 1.6;
 }
 
+/* Custom controls hidden on desktop */
+.menu-toggle-btn {
+  display: none;
+}
+.mobile-hint-text {
+  display: none;
+}
+
+/* Tactile Dwell pulsing ring */
+.dwell-ring {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border: 1.5px solid var(--accent-red);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.dwell-ring.active {
+  opacity: 0.75;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulse-dwell-ring 1.2s infinite ease-out;
+}
+@keyframes pulse-dwell-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
+  /* Header & Navigation Drawer */
   .header-inner {
-    padding: 15px 20px;
+    padding: 0 15px;
+    height: 60px;
   }
-  nav {
-    display: none; /* Hide top nav on mobile to keep layout clean */
+  .logo {
+    font-size: 1.1rem;
   }
+  
+  /* Hamburger button */
+  .menu-toggle-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+    padding: 0;
+    margin-left: 10px;
+  }
+  .menu-toggle-btn .bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+  }
+  .menu-toggle-btn.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--accent-red);
+  }
+  .menu-toggle-btn.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle-btn.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--accent-red);
+  }
+
+  /* Slide-out navigation drawer */
+  #nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background: rgba(12, 10, 10, 0.98);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    padding: 90px 30px 40px;
+    gap: 15px;
+    transition: right 0.3s ease-in-out;
+    z-index: 100;
+  }
+  body.daylight-mode #nav-menu {
+    background: rgba(244, 241, 234, 0.98);
+  }
+  #nav-menu.open {
+    right: 0;
+  }
+  #nav-menu a {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    transition: color 0.3s ease;
+  }
+  body.daylight-mode #nav-menu a {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+  }
+  #nav-menu a:hover, #nav-menu a.active {
+    color: var(--accent-red);
+  }
+
+  /* Controls layout adjustments */
+  .controls {
+    gap: 12px;
+  }
+  .light-switch-container .switch-label {
+    display: none; /* Hide Safelight/Daylight labels to fit screen */
+  }
+
+  /* Sections general spacing */
   .scroll-section {
-    padding: 100px 15px 40px;
+    padding: 80px 15px 40px;
   }
   h2 {
     font-size: 1.8rem;
   }
-  .trays-wrapper {
-    grid-template-columns: 1fr;
-    gap: 20px;
+
+  /* Mobile hint instructions text */
+  .mobile-hint-text {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+    text-align: center;
+    transition: opacity 0.5s ease, margin 0.5s ease, height 0.5s ease;
   }
-  .tray {
-    height: 140px;
+  .mobile-hint-text.hidden {
+    opacity: 0 !important;
+    height: 0;
+    margin: 0;
+    pointer-events: none;
+    overflow: hidden;
   }
+
+  /* Mobile clothesline stack */
+  .clothesline-container {
+    height: auto;
+    min-height: 400px;
+  }
+  #clothesline-svg {
+    display: none;
+  }
+  #clothesline-items {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 30px 10px;
+    width: 100%;
+    height: auto;
+  }
+  .hanging-item {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    flex: 0 0 auto;
+    width: 90%;
+    max-width: 280px;
+    display: flex;
+    justify-content: center;
+  }
+  .hanging-item::before {
+    display: block; /* Keep clip pin decoration */
+  }
+
+  /* Gallery Grid & Headers */
+  .grid-layout {
+    grid-template-columns: 1fr !important;
+    gap: 25px;
+  }
+  .case-study-block {
+    border: none;
+    background: none;
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  body.daylight-mode .case-study-block {
+    background: none;
+  }
+  .case-study-header {
+    position: sticky;
+    top: 59px;
+    background: var(--bg-color, #0c0a0a);
+    z-index: 20;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+    margin-bottom: 20px;
+  }
+  body.daylight-mode .case-study-header {
+    background: var(--bg-color, #f4f1ea);
+  }
+
+  /* Scrollable filters */
+  .filters {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    gap: 10px;
+    padding: 4px 2px;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-btn {
+    flex: 0 0 auto;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    font-size: 0.9rem;
+  }
+
+  /* Contact Sheets Column grid cap */
   .timeline-item {
     flex-direction: column;
     gap: 15px;
@@ -1011,47 +1228,55 @@ body.daylight-mode .tech-log-content {
     max-width: 100%;
     width: 100%;
   }
+
+  /* Negatives Frame Detail adjustments */
+  .negative-frame {
+    padding: 6px;
+  }
+  .negative-canvas-wrapper {
+    margin: 0 10px;
+  }
+  .negative-caption-wrap {
+    margin: 10px 10px 0;
+  }
+
+  /* Trays vertically stacked height */
+  .trays-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .tray {
+    height: 140px;
+  }
+
+  /* Notes layout stacking */
   .notes-book {
     flex-direction: column;
   }
   .notes-page-left {
     border-right: none;
     border-bottom: 1px solid var(--border-color);
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+  }
+
+  /* Contact Form Inputs & Buttons */
+  .form-group input, .form-group textarea {
+    font-size: 16px; /* prevent iOS focus page-zoom */
+  }
+  .submit-btn {
+    min-height: 48px; /* accessible button sizing */
   }
   .contact-links {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
   }
-  /* Mobile clothesline stack */
-  .clothesline-container {
-    height: auto;
-    min-height: 350px;
-  }
-  #clothesline-svg {
-    display: none; /* Hide svg line wire on mobile */
-  }
-  #clothesline-items {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 20px;
-    padding: 20px 10px;
-    scroll-snap-type: x mandatory;
-    width: 100%;
-    height: auto;
-  }
-  .hanging-item {
-    position: relative;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    flex: 0 0 260px;
-    scroll-snap-align: center;
-  }
-  .hanging-item::before {
-    display: none;
+  .contact-link {
+    word-break: break-all;
+    text-align: center;
+    max-width: 100%;
+    padding: 8px 0;
   }
 }
 

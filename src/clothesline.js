@@ -89,16 +89,41 @@ export function initClothesline(items) {
     });
   });
 
+  // Track scroll position for mobile scroll-speed physics
+  let lastScrollY = window.scrollY;
+  let scrollSpeed = 0;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    scrollSpeed = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
+  }, { passive: true });
+
   // Clothesline animation loop (mass-spring-damper sway)
   const loop = () => {
     const time = Date.now() / 1000;
-    
-    // Ignore physics on mobile where items are stacked horizontally via flex row
     const isMobile = window.innerWidth <= 768;
 
     cardsData.forEach(card => {
       if (isMobile) {
-        card.element.style.transform = 'none';
+        // Apply scroll-induced velocity impulse
+        if (Math.abs(scrollSpeed) > 0.1) {
+          card.velocity += scrollSpeed * 0.04;
+        }
+        
+        // Damped mass spring calculation
+        const k = 0.06; // spring stiffness
+        const c = 0.08; // higher damping on mobile
+        
+        const accel = -k * card.sway - c * card.velocity;
+        card.velocity += accel;
+        card.sway += card.velocity;
+        
+        // Clamp maximum angle to avoid flipping upside down
+        card.sway = Math.max(-15, Math.min(15, card.sway));
+
+        const ambient = Math.sin(time * 1.5 + card.basePhase) * 1.2;
+        const totalAngle = card.sway + ambient;
+        card.element.style.transform = `rotate(${totalAngle}deg)`;
         return;
       }
 
@@ -116,6 +141,13 @@ export function initClothesline(items) {
       const totalAngle = card.sway + ambient;
       card.element.style.transform = `rotate(${totalAngle}deg)`;
     });
+
+    // Decay the scroll speed impulse slowly in the animation tick
+    if (Math.abs(scrollSpeed) > 0.1) {
+      scrollSpeed *= 0.85;
+    } else {
+      scrollSpeed = 0;
+    }
 
     requestAnimationFrame(loop);
   };

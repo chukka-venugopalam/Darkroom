@@ -105,8 +105,10 @@ const fsSource = `
 class WebGLRenderer {
   constructor() {
     this.canvas = document.createElement('canvas');
-    this.canvas.width = 1024;
-    this.canvas.height = 1024;
+    const isMobile = window.innerWidth <= 768;
+    const size = isMobile ? 512 : 1024;
+    this.canvas.width = size;
+    this.canvas.height = size;
     this.gl = this.canvas.getContext('webgl', { preserveDrawingBuffer: true });
 
     if (!this.gl) {
@@ -412,6 +414,29 @@ export function registerTile(id, element, imageSrc, tier) {
     queueRender(id, 1);
   });
 
+  // Unified Dwell-Hold Handler (Continuous touch reveal)
+  element.addEventListener('dwell-hold', (e) => {
+    if (tileData.isFixed) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.detail.x - rect.left) / rect.width * 128;
+    const y = (e.detail.y - rect.top) / rect.height * 128;
+
+    // Draw moderate size circle continuously for dwell hold
+    const grad = exposureCtx.createRadialGradient(x, y, 0, x, y, 28);
+    // Draw slightly faster on mobile (0.045 per 50ms) to reduce thumb fatigue
+    const isMobile = window.innerWidth <= 768;
+    const alpha = isMobile ? 'rgba(255, 255, 255, 0.045)' : 'rgba(255, 255, 255, 0.03)';
+    grad.addColorStop(0, alpha);
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    exposureCtx.fillStyle = grad;
+    exposureCtx.beginPath();
+    exposureCtx.arc(x, y, 28, 0, Math.PI * 2);
+    exposureCtx.fill();
+
+    tileData.lastInteraction = Date.now();
+    queueRender(id, 1);
+  });
+
   // Run initial drawing frame
   queueRender(id, 3);
 }
@@ -566,7 +591,7 @@ function updateExposureMetrics(tile) {
     localStorage.setItem(`darkroom_exposure_${baseId}`, tile.cap.toString());
 
     // Dispatch completion event for video/UI elements
-    tile.canvas.dispatchEvent(new CustomEvent('fixed', { detail: { id: tile.id } }));
+    tile.canvas.dispatchEvent(new CustomEvent('fixed', { bubbles: true, detail: { id: tile.id } }));
 
     // Run one final fixed render
     if (webglAvailable) {
@@ -667,6 +692,6 @@ export function forceCompleteDevelopment() {
     }
     
     // Dispatch fixed event for videos
-    tile.canvas.dispatchEvent(new CustomEvent('fixed', { detail: { id: tile.id } }));
+    tile.canvas.dispatchEvent(new CustomEvent('fixed', { bubbles: true, detail: { id: tile.id } }));
   });
 }

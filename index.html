@@ -25,7 +25,12 @@
   <header>
     <div class="header-inner">
       <div class="logo">DARKROOM</div>
-      <nav>
+      <button id="menu-toggle" aria-label="Toggle navigation menu" class="menu-toggle-btn">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav id="nav-menu">
         <a href="#the-line-section">Line</a>
         <a href="#gallery-section">Gallery</a>
         <a href="#contact-sheets-section">Contact Sheets</a>
@@ -54,6 +59,7 @@
     <section id="the-line-section" class="scroll-section">
       <div class="section-header">
         <span class="tagline">Give it time. Nothing here is rushed.</span>
+        <div class="mobile-hint-text">Touch and hold to develop. Drag to agitate.</div>
       </div>
       <div class="clothesline-container">
         <svg id="clothesline-svg" viewBox="0 0 1400 300" preserveAspectRatio="none">

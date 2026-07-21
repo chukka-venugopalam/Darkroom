@@ -380,6 +380,52 @@ function initContactForm() {
   });
 }
 
+// Mobile navigation drawer toggle
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  if (!toggleBtn || !navMenu) return;
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navMenu.classList.toggle('open');
+    toggleBtn.classList.toggle('open');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#nav-menu') && !e.target.closest('#menu-toggle')) {
+      navMenu.classList.remove('open');
+      toggleBtn.classList.remove('open');
+    }
+  });
+
+  // Close menu when clicking any nav link
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      toggleBtn.classList.remove('open');
+    });
+  });
+}
+
+// Track dwell-hold completion hint seen flag
+function initDwellHintTracker() {
+  const hint = document.querySelector('.mobile-hint-text');
+  if (!hint) return;
+
+  // Check if they already successfully developed a print previously
+  if (localStorage.getItem('darkroom_dwell_hint_seen') === 'true') {
+    hint.classList.add('hidden');
+  } else {
+    // Listen for development completions
+    document.addEventListener('fixed', () => {
+      hint.classList.add('hidden');
+      localStorage.setItem('darkroom_dwell_hint_seen', 'true');
+    });
+  }
+}
+
 // Init everything
 window.addEventListener('DOMContentLoaded', () => {
   new CustomCursor();
@@ -391,6 +437,8 @@ window.addEventListener('DOMContentLoaded', () => {
   populateNegatives();
   
   // Connect modules
+  initMobileMenu();
+  initDwellHintTracker();
   initDevelopEngine();
   initTrays();
   initLightSwitch();
