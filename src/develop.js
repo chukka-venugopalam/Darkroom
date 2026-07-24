@@ -182,10 +182,15 @@ class WebGLRenderer {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([240, 238, 230, 255]));
 
     const img = new Image();
-    img.loading = 'lazy';
     img.onload = () => {
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      // Re-queue render for all tiles consuming this texture so canvas repaints immediately
+      tiles.forEach((t) => {
+        if (t.imageSrc === imageSrc) {
+          queueRender(t.id, 2);
+        }
+      });
     };
     img.src = imageSrc;
 
