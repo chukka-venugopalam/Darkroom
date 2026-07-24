@@ -1,4 +1,6 @@
 export let webglAvailable = true;
+export const MOBILE_BREAKPOINT = 768;
+export const isMobileViewport = () => window.innerWidth <= MOBILE_BREAKPOINT;
 import { drawOrbitalResonance, drawSolarCorona } from './video.js';
 
 // WebGL shaders
@@ -105,7 +107,7 @@ const fsSource = `
 class WebGLRenderer {
   constructor() {
     this.canvas = document.createElement('canvas');
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = isMobileViewport();
     const size = isMobile ? 512 : 1024;
     this.canvas.width = size;
     this.canvas.height = size;
@@ -180,6 +182,7 @@ class WebGLRenderer {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([240, 238, 230, 255]));
 
     const img = new Image();
+    img.loading = 'lazy';
     img.onload = () => {
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
@@ -424,7 +427,7 @@ export function registerTile(id, element, imageSrc, tier) {
     // Draw moderate size circle continuously for dwell hold
     const grad = exposureCtx.createRadialGradient(x, y, 0, x, y, 28);
     // Draw slightly faster on mobile (0.045 per 50ms) to reduce thumb fatigue
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = isMobileViewport();
     const alpha = isMobile ? 'rgba(255, 255, 255, 0.045)' : 'rgba(255, 255, 255, 0.03)';
     grad.addColorStop(0, alpha);
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');

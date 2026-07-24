@@ -1,4 +1,4 @@
-import { registerTile } from './develop.js';
+import { registerTile, isMobileViewport } from './develop.js';
 
 export function initClothesline(items) {
   const container = document.getElementById('clothesline-items');
@@ -101,7 +101,7 @@ export function initClothesline(items) {
   // Clothesline animation loop (mass-spring-damper sway)
   const loop = () => {
     const time = Date.now() / 1000;
-    const isMobile = window.innerWidth <= 768;
+    const isMobile = isMobileViewport();
 
     cardsData.forEach(card => {
       if (isMobile) {

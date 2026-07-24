@@ -163,8 +163,8 @@ function mountVideoPlayer(tile, videoSrc) {
         .then(() => {
           playOverlay.classList.add('playing');
         })
-        .catch(err => {
-          console.log('Autoplay blocked, showing play overlay:', err);
+        .catch(() => {
+          // Autoplay blocked by browser policy, keep play overlay ready
         });
 
       // Video interaction events

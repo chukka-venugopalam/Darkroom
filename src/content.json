@@ -101,5 +101,34 @@
     "image": "/images/solar_corona_poster.png",
     "video": "procedural:solar-corona",
     "caption": "A meditative pulse of solar plasma filaments rising along magnetic field lines. Restrained monochrome-orange, showcasing the geometry of solar magnetism."
+  },
+  {
+    "id": "latent-image-questions",
+    "title": "The Latent Image",
+    "tier": 4,
+    "medium": "text",
+    "date": "2026-07-23",
+    "questions": [
+      {
+        "q": "What is life meant for, to you?",
+        "a": "To create with quiet intention, build things that outlast the noise, and leave behind a record of having paid close attention."
+      },
+      {
+        "q": "What does it actually mean to be happy?",
+        "a": "Not excitement or triumph, but a quiet frictionlessness — the state where what you do, what you care about, and how you spend your hours are in total alignment."
+      },
+      {
+        "q": "What does peace feel like, when you have it?",
+        "a": "The absence of urgency. Standing in a darkroom watching silver grains form without trying to rush the chemistry."
+      },
+      {
+        "q": "What are you still trying to figure out?",
+        "a": "How to balance the hunger to build with the stillness required to appreciate what has already been built."
+      },
+      {
+        "q": "What would you do differently, if no one was watching?",
+        "a": "Not a single line of code. Craft isn't performed for an audience; it's the practice of keeping faith with the work itself."
+      }
+    ]
   }
 ]

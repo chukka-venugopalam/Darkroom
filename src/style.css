@@ -1357,4 +1357,77 @@ body.daylight-mode .case-study-block {
   outline-offset: 6px;
 }
 
+/* THE LATENT IMAGE: Undeveloped Questions */
+.latent-image-box {
+  background: rgba(18, 15, 15, 0.6);
+  border: 1px solid var(--border-color);
+  padding: 40px;
+  border-radius: 6px;
+  max-width: 900px;
+  margin: 0 auto;
+  transition: background 0.8s ease, border-color 0.8s ease;
+}
+body.daylight-mode .latent-image-box {
+  background: rgba(238, 235, 227, 0.6);
+}
+.latent-header {
+  margin-bottom: 30px;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 20px;
+}
+.latent-microcopy {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent-red);
+  margin-top: 10px;
+  font-style: italic;
+}
+.latent-questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.latent-item {
+  border-left: 2px solid var(--border-color);
+  padding-left: 18px;
+  transition: border-color 0.4s ease;
+}
+body.daylight-mode .latent-item {
+  border-left-color: var(--accent-red);
+}
+.latent-question {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.latent-answer {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+.latent-answer .answer-placeholder {
+  display: inline-block;
+  color: var(--accent-red);
+  font-family: var(--font-mono);
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+.latent-answer .answer-text {
+  display: none;
+  opacity: 0;
+  color: var(--text-color);
+}
+body.daylight-mode .latent-answer .answer-placeholder {
+  display: none;
+}
+body.daylight-mode .latent-answer .answer-text {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+
 
