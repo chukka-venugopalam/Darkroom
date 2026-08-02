@@ -26,18 +26,19 @@
     <div class="header-inner">
       <a href="#the-line-section" class="logo-brand" aria-label="Darkroom Home">
         <div class="logo-emblem">
-          <svg viewBox="0 0 40 40" class="logo-svg" aria-hidden="true">
-            <!-- 35mm Film Frame Outer Box -->
-            <rect x="4" y="6" width="32" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="1.8" />
-            <!-- Film Viewfinder Inner Frame -->
-            <rect x="8" y="10" width="24" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4" />
-            <!-- Viewfinder Center Focus Dot -->
-            <circle cx="20" cy="20" r="3" class="logo-core" />
-            <!-- Corner Focus Brackets -->
-            <path d="M 12,14 L 12,12 L 14,12" stroke="currentColor" stroke-width="1.2" fill="none" />
-            <path d="M 26,12 L 28,12 L 28,14" stroke="currentColor" stroke-width="1.2" fill="none" />
-            <path d="M 28,26 L 28,28 L 26,28" stroke="currentColor" stroke-width="1.2" fill="none" />
-            <path d="M 14,28 L 12,28 L 12,26" stroke="currentColor" stroke-width="1.2" fill="none" />
+          <svg viewBox="0 0 32 32" class="logo-svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="darkroomHeaderDev" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="var(--accent-red)" stop-opacity="0.95" />
+                <stop offset="65%" stop-color="var(--accent-red)" stop-opacity="0.3" />
+                <stop offset="100%" stop-color="var(--accent-red)" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <!-- Clothesline Clip Detail at Top Center Edge -->
+            <rect x="14.5" y="2" width="3" height="5" rx="0.8" fill="var(--accent-red)" />
+            <!-- Mid-Development Photo Print Square -->
+            <rect x="4" y="6" width="24" height="24" rx="2" fill="url(#darkroomHeaderDev)" />
+            <rect x="4" y="6" width="24" height="24" rx="2" fill="none" stroke="var(--accent-red)" stroke-width="1.5" />
           </svg>
         </div>
         <div class="logo-text">
