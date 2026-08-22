@@ -1,16 +1,19 @@
-# React + Vite
+# Darkroom — Creative Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A frontend thesis project: a creative archive that behaves like a physical
+photographic darkroom under a red safelight. Content develops progressively
+through visitor interaction — cursor agitation and dwell time reveal images,
+video, and ideas the way a print develops in chemistry.
 
-Currently, two official plugins are available:
+Live: https://darkroom-seven.vercel.app
+Full case study: see /docs/case-study.md (or link to your written case study)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
+Vite, vanilla JavaScript, vanilla CSS, WebGL (single shared context, no framework).
 
-## React Compiler
+## Development
+npm install
+npm run dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Build
+npm run build

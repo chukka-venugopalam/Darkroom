@@ -203,7 +203,7 @@ class WebGLRenderer {
     const gl = this.gl;
 
     gl.useProgram(this.program);
-    gl.viewport(0, 0, 1024, 1024);
+    gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
     // Bind original photo texture
     const photoTex = this.getTexture(tile.imageSrc);
