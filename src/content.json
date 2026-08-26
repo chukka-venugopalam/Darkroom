@@ -25,7 +25,7 @@
     "date": "2026-07-08",
     "image": "/images/cymatics_poster.png",
     "video": "/videos/cymatics.mp4",
-    "caption": "Symmetrical mandala pattern forming in fine sand on a vibrating black metal plate at pure tone frequencies."
+    "caption": "Symmetrical nodal resonance forming in fine sand on a vibrating plate. Active darkroom study — pending high-speed video capture."
   },
   {
     "id": "radiolaria-architecture",
@@ -46,14 +46,71 @@
     "caption": "Micro time-lapse analysis of facet crystallization expanding outward in a grid-like coordinate space."
   },
   {
+    "id": "grief-interfaces",
+    "title": "Grief Interfaces // Sketch",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-06-20",
+    "image": "/images/grief_interfaces.png",
+    "caption": "Early interaction sketch exploring friction as care — digital spaces designed for loss, deliberately resisting speed and instant gratification."
+  },
+  {
+    "id": "sonic-skin",
+    "title": "Sonic Skin // Acoustic Topology",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-06-28",
+    "image": "/images/sonic_skin.png",
+    "caption": "Research prototype mapping low-frequency acoustic vibrations to tactile DOM mesh distortions. Testing physical resistance thresholds."
+  },
+  {
+    "id": "topological-memory",
+    "title": "Topological Memory Map",
+    "tier": 2,
+    "medium": "sketch",
+    "date": "2026-07-02",
+    "image": "/images/topological_memory.png",
+    "caption": "Algorithmic contour map built from latency fluctuations. Visualizing computational delay as physical elevation."
+  },
+  {
     "id": "crystallization-error",
     "title": "Crystallization Error",
     "tier": 3,
     "medium": "photo",
     "date": "2026-05-18",
-    "image": "/images/crystalline_growth.png",
+    "image": "/images/crystallization_error.png",
     "caption": "Incomplete crystallization study under polarized filter.",
     "reason": "Mineral density grew too fast, shattering the micro-lens array and fogging the plate."
+  },
+  {
+    "id": "apology-engine",
+    "title": "The Apology Engine",
+    "tier": 3,
+    "medium": "photo",
+    "date": "2026-04-12",
+    "image": "/images/apology_engine.png",
+    "caption": "Automated sentiment analysis framework designed to generate proportional corporate accountability statements.",
+    "reason": "The model inevitably optimized for semantic deflection rather than sincere contrition. Concept discarded."
+  },
+  {
+    "id": "post-human-branding",
+    "title": "Post-Human Identity Protocol",
+    "tier": 3,
+    "medium": "photo",
+    "date": "2026-04-29",
+    "image": "/images/post_human_branding.png",
+    "caption": "Adaptive visual brand identity generated dynamically from environmental sensor telemetry.",
+    "reason": "Visual output converged on uniform grey noise within 48 hours of live sensor input. Architecture terminated."
+  },
+  {
+    "id": "fractured-foil",
+    "title": "Fractured Foil // Shutter Drift",
+    "tier": 3,
+    "medium": "photo",
+    "date": "2026-05-04",
+    "image": "/images/fractured_foil.png",
+    "caption": "High-speed strobe capture of crinkled aluminum foil reflecting uneven light cones.",
+    "reason": "Specular highlights produced uncontrollable sensor clipping and artifacting. Replaced by Radiolaria study."
   },
   {
     "id": "spiral-galaxy",
