@@ -598,7 +598,28 @@ h2 {
   width: 0%;
   border-radius: 2px;
   position: relative;
-  z-index: 15;
+  z-index: 1;
+}
+
+.video-fallback-label {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent-red);
+  border: 1px dashed var(--border-color);
+  padding: 4px 8px;
+  border-radius: 3px;
+  background: rgba(12, 10, 10, 0.85);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 10;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+body.daylight-mode .video-fallback-label {
+  background: rgba(245, 242, 235, 0.9);
 }
 
 /* CONTACT SHEETS (Tier 2) Timeline */

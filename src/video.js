@@ -125,24 +125,12 @@ function mountVideoPlayer(tile, videoSrc) {
 
       video.style.display = 'none';
       wrapper.style.background = 'transparent';
+      wrapper.style.pointerEvents = 'none';
 
       // Quiet darkroom archive style label stamp
       const label = document.createElement('div');
       label.className = 'video-fallback-label';
       label.textContent = 'NOT YET DEVELOPED';
-
-      label.style.position = 'absolute';
-      label.style.bottom = '15px';
-      label.style.left = '15px';
-      label.style.fontFamily = 'var(--font-mono)';
-      label.style.fontSize = '0.7rem';
-      label.style.color = 'var(--accent-red)';
-      label.style.border = '1px dashed var(--border-color)';
-      label.style.padding = '4px 8px';
-      label.style.borderRadius = '3px';
-      label.style.background = 'rgba(12, 10, 10, 0.85)';
-      label.style.letterSpacing = '1px';
-      label.style.textTransform = 'uppercase';
 
       wrapper.appendChild(label);
     };
